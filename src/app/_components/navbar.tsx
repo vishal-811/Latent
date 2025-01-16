@@ -11,9 +11,13 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { auth } from "~/server/auth";
 import { signout } from "./signout";
+import { Button } from "~/components/ui/button";
+import signin from "./signin";
 
 export default async function Navbar() {
   const session = await auth();
+
+  console.log("Session is", session);
 
   return (
     <nav className="container mx-auto flex items-center justify-between border-b border-zinc-200 p-6">
@@ -37,7 +41,7 @@ export default async function Navbar() {
 
       {/* User login  */}
       {/* Avatar */}
-      <div>
+      {session ?  <div>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
@@ -53,7 +57,7 @@ export default async function Navbar() {
             <DropdownMenuItem onClick={signout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
+      </div> : <Button onClick={signin}>Login</Button>}
     </nav>
   );
 }
